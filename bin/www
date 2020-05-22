@@ -22,12 +22,17 @@ var server = http.createServer(app);
 
 var io = require('socket.io')(server);
 
-io.on('connection', function(socket){
+io.on('connection', function (socket){
   console.log('a user connected');
 
-  socket.on('sendMessage', function(messageData) {
+  socket.on('sendMessage', function (messageData) {
 
-     socket.emit('sendMessageToAll', messageData);
+    io.emit('sendMessageToAll', messageData);
+  });
+
+  socket.on('sendUserLocation', function (userLocationData) {
+
+    io.emit('sendUserLocationToAll', userLocationData);
   });
 });
 
